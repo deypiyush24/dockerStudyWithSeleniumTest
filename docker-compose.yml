@@ -1,0 +1,55 @@
+# version: '3.8'
+
+# services:
+#   # Selenium Grid (Standalone) - using seleniarm image for Apple Silicon (ARM64) compatibility
+#   selenium-hub:
+#     image: seleniarm/standalone-chromium:latest
+#     container_name: selenium-hub
+#     shm_size: 2gb
+#     ports:
+#       - "4444:4444"
+#       - "7900:7900" # VNC port to watch tests live at http://localhost:7900 (password: secret)
+
+#   # Our Automation Framework
+#   test-suite:
+#     build: .
+#     container_name: test-suite
+#     depends_on:
+#       - selenium-hub
+#     environment:
+#       # Ensures the tests execute the if (systemValue.equals("docker")) block
+#       - runMode=docker
+
+#     command: mvn test -DrunMode=docker
+
+version: "3.8"
+
+services:
+  # The central Hub
+  selenium-hub:
+    image: selenium/hub:4.18.1
+    container_name: selenium-hub
+    ports:
+      - "4444:4444"
+
+  # The Chrome Browser Node
+  chrome:
+    image: selenium/node-chrome:4.18.1
+    shm_size: '2gb' # Prevents browser crashing
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  # Your Test Runner
+  java-tests:
+    build: .
+    container_name: java-cucumber-runner
+    depends_on:
+      - selenium-hub
+    environment:
+      - runMode=docker
+    # Overriding the CMD to pass your tags and mode
+    command: mvn test -DrunMode=docker
