@@ -2,6 +2,7 @@ package Utills;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
@@ -14,6 +15,9 @@ public class DriverFactory {
 
         switch (browser.toLowerCase()) {
             case "chrome":
+                ChromeOptions chromeOptions = new ChromeOptions();
+                chromeOptions.addArguments("--start-maximized");
+                chromeOptions.addArguments("--incognito");
                 driver = new ChromeDriver();
                 break;
 
