@@ -1,27 +1,3 @@
-# version: '3.8'
-
-# services:
-#   # Selenium Grid (Standalone) - using seleniarm image for Apple Silicon (ARM64) compatibility
-#   selenium-hub:
-#     image: seleniarm/standalone-chromium:latest
-#     container_name: selenium-hub
-#     shm_size: 2gb
-#     ports:
-#       - "4444:4444"
-#       - "7900:7900" # VNC port to watch tests live at http://localhost:7900 (password: secret)
-
-#   # Our Automation Framework
-#   test-suite:
-#     build: .
-#     container_name: test-suite
-#     depends_on:
-#       - selenium-hub
-#     environment:
-#       # Ensures the tests execute the if (systemValue.equals("docker")) block
-#       - runMode=docker
-
-#     command: mvn test -DrunMode=docker
-
 version: "3.8"
 
 services:

@@ -39,7 +39,8 @@ public class WaitUtils {
         return wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
     // Fluent wait (advanced)
-    public WebElement fluentWait(By locator, int timeout, int polling) {
+    public WebElement fluentWait(By locator, int timeout, int polling)
+    {
         Wait<WebDriver> fluentWait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(timeout))
                 .pollingEvery(Duration.ofSeconds(polling))

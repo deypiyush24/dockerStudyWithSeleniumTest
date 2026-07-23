@@ -2,12 +2,14 @@ package Pages;
 
 import Utills.DriverFactory;
 import Utills.DriverManager;
+import Utills.DriverManagerRemote;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.MalformedURLException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -15,18 +17,17 @@ import java.util.List;
 public class Google {
 
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, MalformedURLException {
 
         ////Here Able to fetch the All the Dynamically generate values
 
 
-//        String value = "Cooler";
-//        String url = "https://www.amazon.in/";
-//        DriverFactory.initDriver("chrome");
+        String value = "Cooler";
+        searchDataInGoogle(value);
 
-        URLs value1 = URLs.Base_URL_ITN3;
-        String urlValue = value1.getValue();
-        System.out.println(urlValue);
+//        URLs value1 = URLs.Base_URL_ITN3;
+//        String urlValue = value1.getValue();
+//        System.out.println(urlValue);
 
 
 //
@@ -106,10 +107,10 @@ public class Google {
 
 
 
-    private static void searchDataInGoogle() {
-        String valueToPassed = "INDIA";
-        DriverFactory.initDriver("chrome");
-        WebDriver driverInstanceOne = DriverManager.getDriver();
+    private static void searchDataInGoogle( String valueToPassed) throws MalformedURLException {
+
+        DriverManagerRemote.setDriver("chrome");
+        WebDriver driverInstanceOne = DriverManagerRemote.getDriver();
         driverInstanceOne.get("https://www.google.com");
 
         driverInstanceOne.manage().window().maximize();

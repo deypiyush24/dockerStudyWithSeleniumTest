@@ -1,5 +1,8 @@
 package Pages;
 
+import Pages.PojoClass.UserClass;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
@@ -9,7 +12,7 @@ import java.util.Map;
 
 public class APITesting {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws JsonProcessingException {
         System.out.println("API Testing");
 
 
@@ -31,6 +34,20 @@ public class APITesting {
 
         Response finalResponseFromEndpoint = RestAssured.given().header ("Authorisation", "Bearer " + token).when().get(combineUrl).then().log().all().
                 statusCode(200).extract().response();
+
+        finalResponseFromEndpoint.jsonPath().getString("access_token");
+
+
+        String bearerToken = String.format("Bearer %s",token);
+
+
+        Response updatedData = RestAssured.given().header("Authorization",bearerToken).when().post(combineUrl).then().log().all().statusCode(201).extract().response();
+
+        int toku = updatedData.jsonPath().getInt("access_token");
+
+        ObjectMapper schemaMapper = new ObjectMapper();
+        UserClass schema = schemaMapper.readValue(updatedData.toString(), UserClass.class);
+
 
 
     }

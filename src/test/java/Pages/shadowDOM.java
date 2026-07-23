@@ -33,13 +33,25 @@ public class shadowDOM {
         targetElement.sendKeys("Automating Shadow DOM!");
 
          */
-        Wait<WebDriver> explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        explicitWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("\"ntp-app\""))));
+
+
+        Wait<WebDriver> wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("\"ntp-app\""))));
+
+        Wait<WebDriver> fluentWait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(5)).pollingEvery(Duration.ofSeconds(1)).ignoring(NoSuchElementException.class)
+                .ignoring(ElementNotInteractableException.class).withMessage("Element not found after 5sec");
+        fluentWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("\"ntp-app\""))));
+
+//        Wait<WebDriver> explicitWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        explicitWait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("\"ntp-app\""))));
+//
+//
+//
+//        Wait<WebDriver> fluentWait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(2)).
+//                ignoring(NoSuchElementException.class).ignoring(ElementNotInteractableException.class).withMessage("Element is not interactable after 30 sec");
 
 
 
-        Wait<WebDriver> fluentWait = new FluentWait<>(driver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(2)).
-                ignoring(NoSuchElementException.class).ignoring(ElementNotInteractableException.class).withMessage("Element is not interactable after 30 sec");
 
 
 
@@ -48,10 +60,7 @@ public class shadowDOM {
 
 
 
-
-
-
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         try {
             // Step 1: Locate the first Shadow Host (<ntp-app>) Here we get the First
