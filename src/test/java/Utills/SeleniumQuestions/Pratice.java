@@ -1,7 +1,4 @@
-package Pages;
-
-import java.util.ArrayList;
-import java.util.List;
+package Utills.SeleniumQuestions;
 
 public class Pratice {
 

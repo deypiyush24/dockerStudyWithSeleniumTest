@@ -23,6 +23,7 @@ public class APITesting {
         String tokenURL ="PiyushURL";
 
 
+
       Response responseFromTokenURL =
               RestAssured.given().formParams(formParameters).when().post(tokenURL)
                       .then().statusCode(200).log().all()
@@ -41,14 +42,28 @@ public class APITesting {
         String bearerToken = String.format("Bearer %s",token);
 
 
-        Response updatedData = RestAssured.given().header("Authorization",bearerToken).when().post(combineUrl).then().log().all().statusCode(201).extract().response();
+//        Response updatedData = RestAssured.given().header("Authorization",bearerToken).when().post(combineUrl).then().log().all().statusCode(201).extract().response();
 
-        int toku = updatedData.jsonPath().getInt("access_token");
+         Response value = RestAssured.given().header("Authorisation", " Bearer Token").when().get(combineUrl).then().log().all().statusCode(200).extract()
+                 .response();
 
-        ObjectMapper schemaMapper = new ObjectMapper();
-        UserClass schema = schemaMapper.readValue(updatedData.toString(), UserClass.class);
+         value.jsonPath().getString("token");
+
+         ObjectMapper responseMapper = new ObjectMapper();
+         responseMapper.readValue(value.toString(),UserClass.class);
 
 
+//        int toku = updatedData.jsonPath().getInt("access_token");
+//
+//        ObjectMapper schemaMapper = new ObjectMapper();
+//        UserClass schema = schemaMapper.readValue(updatedData.toString(), UserClass.class);
+
+
+
+        Response ResponSeFromAPI = RestAssured.given().header("Authorisation", "Token").when().get(combineUrl).then().log().all().statusCode(200).extract().response();
+
+        ObjectMapper mapper = new ObjectMapper();
+        UserClass completeScheme = mapper.readValue(ResponSeFromAPI.toString(),UserClass.class);
 
     }
 }

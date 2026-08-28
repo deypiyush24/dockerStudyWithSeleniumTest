@@ -1,5 +1,12 @@
 package Pages.Questions;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.*;
 
 public class StringQuestions {
@@ -67,17 +74,162 @@ Output 2: [1]
         withFrequencyFindTheValue(nums, frequency);
  */
 
-        /*
-        Collections Question 3: First Unique Character in a Data Stream
 
-Input: stream = "geeksforgeeks"
 
-Output: ['g', 'g', 'g', 'g', 'g', 'e', 'e', 'e', 'e', 'e', 'e', 'r', 'r'] (First non-repeating character evaluated at each step)
-String value ="geeksforgeeks";
-        repeatingWordFetch(value);
+/*Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+
+
+Example 1:
+
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+
+
+Constraints:
+
+1 <= strs.length <= 200
+0 <= strs[i].length <= 200
+strs[i] consists of only lowercase English letters if it is non-empty.*/
+      /*
+         String[]  stringArray = {"flower","flow","flight"}
+      longestPreFixThatMatch(stringArray); */
+
+      String[]  stringArray = {"flower","flow","flowht"};
+      LongestPrefix(stringArray);
+
+
+    }
+
+    private static void LongestPrefix(String[] stringArray) {
+        String firstValue = stringArray[0];
+        String longestValue = "";
+
+        for(int i=0; i<firstValue.length();i++)
+        {
+            String subString = firstValue.substring(0,i);
+            boolean value = false;
+            for(String str : stringArray)
+            {
+                value = false;
+                value = str.contains(subString);
+
+            }
+            if(value)
+            {
+                longestValue =  subString;
+                break;
+            }
+
+            else {
+                longestValue =  "Empty String";
+            }
+
+        }
+
+        System.out.printf(" Longest common word  %s and length %d", longestValue,longestValue.length()).println();
+    }
+
+    private static void longestPreFixThatMatch(String[] stringArray) {
+        int shortestStringLength = getShortestStringLength(stringArray);
+        String firstString = stringArray[0];
+        StringBuilder builder = new StringBuilder();
+
+        for(int i = 0; i< shortestStringLength; i++)
+        {
+            char firstChar = firstString.charAt(i);
+            boolean value =false;
+            for(String eachValue : stringArray)
+            {
+                value =false;
+                if(eachValue.charAt(i) == firstChar)
+                {
+                    value = true;
+                }
+            }
+            if(value)
+            {
+                builder.append(firstChar);
+            }
+        }
+        if(builder.toString().isEmpty())
+        {
+            System.out.println("No Common prefix found");
+        }
+        else
+        {
+            System.out.println(builder);
+        }
+    }
+
+    private static int getShortestStringLength(String[] stringArray) {
+        int shortestStringLength =Integer.MAX_VALUE;
+        for(int i = 1; i< stringArray.length; i++) {
+            int lengthCompare = Integer.min(stringArray[i-1].length(), stringArray[i].length());
+            if(lengthCompare< shortestStringLength)
+            {
+                shortestStringLength = lengthCompare;
+            }
+        }
+        return shortestStringLength;
+    }
+
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        String prefix = strs[0];
+        for (int i = 1; i < strs.length; i++)
+            while (strs[i].indexOf(prefix) != 0)
+            {
+            prefix = prefix.substring(0, prefix.length() - 1);
+            if (prefix.isEmpty()) return "";
+            }
+        return prefix;
+    }
+
+    private static void longestNonRepeartingSubstring(String s) {
+                /*
+        Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3. Note that "bca" and "cab" are also correct answers
          */
 
-        lengthOfStringAsManytimes();
+
+        String input = s.toLowerCase().replaceAll("[.!?]|\\s+","");
+        int lengthOfString = s.length();
+        String previousSubString="";
+        String longestSubStringWithOutRepeating = "";
+        for(int i=1; i<lengthOfString; i++)
+        {
+            previousSubString=input.substring(0,i-1);
+            String subString = input.substring(0,i);// Min Length = 2
+            HashMap<Character,Integer> map=new HashMap<>();
+            char[] ch = subString.toCharArray();
+            for(char c: ch)
+            {
+                map.merge(c,1,Integer::sum);
+            }
+
+
+            if(map.containsValue(2))
+            {
+                longestSubStringWithOutRepeating= previousSubString;
+                break;
+            }
+            else{
+                previousSubString= subString;
+            }
+
+
+        }
+
+        System.out.println(longestSubStringWithOutRepeating);
     }
 
     private static void lengthOfStringAsManytimes() {
@@ -95,6 +247,7 @@ String value ="geeksforgeeks";
 
         }
 
+
         if(builder.toString().length() == s.length()*len)
         {
             System.out.printf("Length is %d times : %s%n",len, builder);
@@ -102,11 +255,22 @@ String value ="geeksforgeeks";
     }
 
     private static void repeatingWordFetch(String value) {
+                /*
+        Collections Question 3: First Unique Character in a Data Stream
+
+Input: stream = "geeksforgeeks"
+
+Output: ['g', 'g', 'g', 'g', 'g', 'e', 'e', 'e', 'e', 'e', 'e', 'r', 'r'] (First non-repeating character evaluated at each step)
+String value ="geeksforgeeks";
+        repeatingWordFetch(value);
+         */
+
         HashMap<Character,Integer> map = new HashMap<>();
 
         for(char c : value.toCharArray()) {
             map.merge(c,1,Integer::sum);
         }
+
 
         StringBuilder builder = new StringBuilder();
 
@@ -132,7 +296,6 @@ String value ="geeksforgeeks";
 
     private static void withFrequencyFindTheValue(int[] nums, int frequency) {
         highestFrequency(nums);
-
 
         HashMap<Integer, Integer> map = new HashMap<>();
         for(int eachNumber : nums) {

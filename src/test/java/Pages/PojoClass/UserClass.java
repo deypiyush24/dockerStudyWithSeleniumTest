@@ -25,5 +25,4 @@ public class UserClass {
     public List<ContactLogistic> getContactLogistics() { return contactLogistics; }
     public void setContactLogistics(List<ContactLogistic> contactLogistics) { this.contactLogistics = contactLogistics; }
 
-
 }
